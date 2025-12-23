@@ -8,6 +8,7 @@ export class ApiRequestServeur {
         headersReq["content-type"] = "application/json";
         headersReq["Accept"] = "application/json";
         headersReq['Authorization'] = "Bearer " + cookieStore.get('login-token')?.value
+        headersReq['X-API-KEY'] = process.env.API_TOKEN || '';
 
 
         if (process.env.ENV_REFERER != undefined) {
