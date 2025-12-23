@@ -7,6 +7,11 @@ interface ListCinemaProps {
 }
 
 export const ListCinema = ({ cinemas }: ListCinemaProps) => {
+    if (cinemas.length === 1) 
+    {
+        return null;
+    }
+
     const selectStyles = {
         control: (base: any) => ({
             ...base,
