@@ -8,7 +8,7 @@ interface ListCinemaProps {
 
 export const ListCinema = ({ cinemas }: ListCinemaProps) => {
     const selectStyles = {
-        control: (base) => ({
+        control: (base: any) => ({
             ...base,
             backgroundColor: "transparent",
             border: "none",
@@ -16,30 +16,30 @@ export const ListCinema = ({ cinemas }: ListCinemaProps) => {
             minHeight: 40,
             cursor: "pointer",
         }),
-        valueContainer: (base) => ({
+        valueContainer: (base: any) => ({
             ...base,
             padding: 0,
         }),
-        singleValue: (base) => ({
+        singleValue: (base: any) => ({
             ...base,
             color: "#fff",
             fontSize: "16px",
             fontWeight: 500,
         }),
-        menu: (base) => ({
+        menu: (base: any) => ({
             ...base,
             backgroundColor: "#1f1f1f",
             borderRadius: 12,
             overflow: "hidden",
         }),
-        option: (base, state) => ({
+        option: (base: any, state: any) => ({
             ...base,
             backgroundColor: state.isFocused ? "#2b2b2b" : "transparent",
             color: "#fff",
             cursor: "pointer",
         }),
         indicatorSeparator: () => ({ display: "none" }),
-        dropdownIndicator: (base) => ({
+        dropdownIndicator: (base: any) => ({
             ...base,
             paddingLeft: 10,
             paddingRight: 0,
