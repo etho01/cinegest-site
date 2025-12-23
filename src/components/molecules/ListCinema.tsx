@@ -3,7 +3,7 @@ import { Cinema } from "@/src/domain/Cinema";
 import { Select } from "../atoms/Select";
 
 interface ListCinemaProps {
-    cinemas: Array<Cinema>;
+    cinemas: Cinema[];
 }
 
 export const ListCinema = ({ cinemas }: ListCinemaProps) => {
