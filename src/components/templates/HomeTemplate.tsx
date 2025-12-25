@@ -4,6 +4,9 @@ import { Header } from "../organisms/Header";
 import { CinemaRepositoryImpl } from "@/src/infrastructure/repositories/CinemaRepositoryImpl";
 import { MovieSwiper } from "../organisms/MovieSwiper";
 import { Movie } from "@/src/domain/Movie";
+import { getWeeklyMovies } from "@/src/application/useCases/movie/getWeeklyMovies";
+import { MovieRepositoryImpl } from "@/src/infrastructure/repositories/MovieRepositoryImpl";
+import { getUpcomingMovies } from "@/src/application/useCases/movie/getUpcomingMovies";
 
 // Données de démonstration - À remplacer par de vraies données d'API
 const upcomingMovies: Movie[] = [
@@ -70,12 +73,15 @@ const upcomingMovies: Movie[] = [
 
 export default async function HomeTemplate() {
     const cinemas = await getCinemas(CinemaRepositoryImpl);
+    const weeklyMovies = await getWeeklyMovies(MovieRepositoryImpl, undefined);
+    const upcomingMovies = await getUpcomingMovies(MovieRepositoryImpl, undefined);
+    console.log(weeklyMovies);
 
     return (
         <>
             <Header page="home" />
             <ListCinema cinemas={cinemas} />
-            <MovieSwiper title="Films à l'affiche" movies={upcomingMovies} />
+            <MovieSwiper title="Films à l'affiche" movies={weeklyMovies} />
             <MovieSwiper title="Prochaines sorties au cinéma" movies={upcomingMovies} />
         </>
     );

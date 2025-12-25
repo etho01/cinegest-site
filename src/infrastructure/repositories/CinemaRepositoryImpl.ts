@@ -7,7 +7,6 @@ import { throwErrorResponse } from "@/src/lib/request/Request";
 export const CinemaRepositoryImpl : CinemaRepository = {
     getCinemas : async (): Promise<Cinema[]> => {
         const resp = await ApiRequestServeur.GET(`${process.env.API_URL}api/site/cinemas`, {}, {});
-        console.log(resp);
         await throwErrorResponse(resp);
 
         const text = await resp.text();
