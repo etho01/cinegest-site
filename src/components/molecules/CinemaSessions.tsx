@@ -11,7 +11,8 @@ interface CinemaSessionsProps {
 export function CinemaSessions({ cinemas, sessions, selectedDate }: CinemaSessionsProps) {
     // Filtrer les séances par date sélectionnée
     const filteredSessions = sessions.filter(session => {
-        const sessionDate = new Date(session.datetime).toISOString().split('T')[0];
+        console.log(session);
+        const sessionDate = new Date(session.startTime).toISOString().split('T')[0];
         return sessionDate === selectedDate;
     });
 
@@ -22,12 +23,8 @@ export function CinemaSessions({ cinemas, sessions, selectedDate }: CinemaSessio
         return acc;
     }, {} as Record<string, MovieSession[]>);
 
-    // Filtrer les cinémas qui ont des séances pour la date sélectionnée
-    const cinemasWithSessions = cinemas.filter(
-        cinema => sessionsByCinema[cinema.id.toString()]?.length > 0
-    );
 
-    if (cinemasWithSessions.length === 0) {
+    if (cinemas.length === 0) {
         return (
             <div className="text-center py-12">
                 <p className="text-gray-400">Aucune séance disponible pour cette date.</p>
@@ -37,7 +34,7 @@ export function CinemaSessions({ cinemas, sessions, selectedDate }: CinemaSessio
 
     return (
         <div className="space-y-4">
-            {cinemasWithSessions.map(cinema => {
+            {cinemas.map(cinema => {
                 const cinemaSessions = sessionsByCinema[cinema.id.toString()];
 
                 return (
@@ -59,12 +56,17 @@ export function CinemaSessions({ cinemas, sessions, selectedDate }: CinemaSessio
                             </div>
                         </div>
 
-                        {/* Grille des séances */}
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
-                            {cinemaSessions.map((session) => (
-                                <SessionCard key={session.id} session={session} />
-                            ))}
-                        </div>
+                        {cinemaSessions && cinemaSessions.length > 0 ? (
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+                                {cinemaSessions.map((session) => (
+                                    <SessionCard key={session.id} session={session} />
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-6">
+                                <p className="text-gray-400">Aucune séance disponible dans ce cinéma pour cette date.</p>
+                            </div>
+                        )}
                     </div>
                 );
             })}

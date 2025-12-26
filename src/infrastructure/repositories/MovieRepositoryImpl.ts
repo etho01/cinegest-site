@@ -1,5 +1,5 @@
 import { MovieRepository } from "@/src/application/repositories/MovieRepository";
-import { Movie } from "@/src/domain/Movie";
+import { Movie, MovieWithSessions } from "@/src/domain/Movie";
 import { ApiRequestServeur } from "@/src/lib/request/ApiRequestServeur";
 import { throwErrorResponse } from "@/src/lib/request/Request";
 
@@ -22,4 +22,15 @@ export const MovieRepositoryImpl : MovieRepository = {
         const body = JSON.parse(text);
         return body as Movie[];
     },
+    getMovieWithSessions : async(movieId: string, cinemaIds: string[]): Promise<MovieWithSessions> => {
+        const resp = await ApiRequestServeur.GET(`${process.env.API_URL}api/site/movie/${movieId}/sessions`, {cinemaIds: cinemaIds.join(',')}, {});
+        await throwErrorResponse(resp);
+
+        const text = await resp.text();
+        const body = JSON.parse(text);
+        console.log(body);
+        let movie = body["movie"];
+        movie.sessions = body["sessions"];
+        return movie as MovieWithSessions;
+    }
 }

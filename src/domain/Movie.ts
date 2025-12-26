@@ -18,16 +18,19 @@ export interface Movie {
     warning?: string; // Avertissement âge/contenu
 }
 
+export interface Option {
+    id: number;
+    price: number;
+    publicName ?: string;
+}
+
+
 export interface MovieSession {
     id: string;
     movieId: string;
     cinemaId: string;
-    datetime: string; // ISO string
-    price: number;
-    technology?: 'IMAX' | '4DX' | 'Dolby' | 'ScreenX' | 'Standard';
-    language: 'VF' | 'VOST' | 'VO';
-    availableSeats: number;
-    totalSeats: number;
+    startTime: string; // ISO string
+    options?: Option[]; // ex: ["Sous-titré", "Audio Description"]
 }
 
 export interface MovieWithSessions extends Movie {
