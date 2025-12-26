@@ -36,17 +36,7 @@ export function MovieHero({ movie }: MovieHeroProps) {
                     <div className="grow space-y-6">
                         {/* Logo ou titre */}
                         <div className="text-center lg:text-left">
-                            {movie.logoUrl ? (
-                                <Image
-                                    src={movie.logoUrl}
-                                    alt={movie.title}
-                                    width={400}
-                                    height={150}
-                                    className="max-w-md mx-auto lg:mx-0"
-                                />
-                            ) : (
-                                <h1 className="text-4xl lg:text-6xl font-bold">{movie.title}</h1>
-                            )}
+                            <h1 className="text-4xl lg:text-6xl font-bold">{movie.title}</h1>
                         </div>
 
                         {/* Informations techniques */}
