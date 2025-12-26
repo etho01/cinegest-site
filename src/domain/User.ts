@@ -1,6 +1,36 @@
 import z from "zod"
 import { CustomError } from "./global";
 
+export type User = {
+    id: number,
+    email : string,
+    firstname : string,
+    lastname: string,
+    phone : string | null,
+}
+
+export interface RegisterUser extends User
+{
+    password : string,
+    passwordConfirmation : string,
+}
+
+export const UserEmpty : User = {
+    id: 0,
+    email : "",
+    firstname : "",
+    lastname: "",
+    phone : null,
+}
+
+export const UserSchema = z.object({
+    id: z.number(),
+    email : z.string().email(),
+    firstname : z.string().max(100),
+    lastname: z.string().max(100),
+    phone : z.string().max(20).nullable(),
+});
+
 export type UserLog = {
     email : string,
     password : string
