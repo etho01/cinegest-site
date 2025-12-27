@@ -18,7 +18,7 @@ export const UserRepositoryImpl: UserRepository = {
         await ApiRequestServeur.POST(`${process.env.API_URL}api/site/auth/logout`, {}, {});
     },
     me: async (): Promise<User> => {
-        const resp = await ApiRequestServeur.GET(`${process.env.API_URL}api/site/me`, {}, {});
+        const resp = await ApiRequestServeur.GET(`${process.env.API_URL}api/site/auth/me`, {}, {});
         await throwErrorResponse(resp);
 
         const text = await resp.text();
