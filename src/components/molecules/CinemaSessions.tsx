@@ -6,9 +6,10 @@ interface CinemaSessionsProps {
     cinemas: Cinema[];
     sessions: MovieSession[];
     selectedDate: string;
+    onSessionClick?: (session: MovieSession) => void;
 }
 
-export function CinemaSessions({ cinemas, sessions, selectedDate }: CinemaSessionsProps) {
+export function CinemaSessions({ cinemas, sessions, selectedDate, onSessionClick }: CinemaSessionsProps) {
     // Filtrer les séances par date sélectionnée
     const filteredSessions = sessions.filter(session => {
         console.log(session);
@@ -59,7 +60,11 @@ export function CinemaSessions({ cinemas, sessions, selectedDate }: CinemaSessio
                         {cinemaSessions && cinemaSessions.length > 0 ? (
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
                                 {cinemaSessions.map((session) => (
-                                    <SessionCard key={session.id} session={session} />
+                                    <SessionCard 
+                                        key={session.id} 
+                                        session={session} 
+                                        onClick={() => onSessionClick?.(session)}
+                                    />
                                 ))}
                             </div>
                         ) : (

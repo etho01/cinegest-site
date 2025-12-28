@@ -6,9 +6,19 @@ interface ModalProps {
     onClose: () => void;
     children: React.ReactNode;
     title?: string;
+    size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
 }
 
-export default function Modal({ isOpen, onClose, children, title }: ModalProps) {
+const sizeClasses = {
+    'sm': 'max-w-sm',
+    'md': 'max-w-md',
+    'lg': 'max-w-lg',
+    'xl': 'max-w-xl',
+    '2xl': 'max-w-2xl',
+    'full': 'max-w-7xl'
+};
+
+export default function Modal({ isOpen, onClose, children, title, size = 'md' }: ModalProps) {
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -45,7 +55,7 @@ export default function Modal({ isOpen, onClose, children, title }: ModalProps) 
             onClick={onClose}
         >
             <div 
-                className="relative w-full max-w-md bg-gray-800 border border-gray-700 rounded-lg shadow-xl m-4 max-h-[90vh] overflow-y-auto"
+                className={`relative w-full ${sizeClasses[size]} bg-gray-800 border border-gray-700 rounded-lg shadow-xl m-4 max-h-[90vh] overflow-y-auto`}
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="sticky top-0 bg-gray-800 border-b border-gray-700 px-6 py-4 flex justify-between items-center">

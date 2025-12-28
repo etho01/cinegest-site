@@ -5,7 +5,9 @@ import { Cinema } from '@/src/domain/Cinema';
 import { getMovieWithSessions } from '@/src/application/useCases/movie/getMovieWithSessions';
 import { MovieRepositoryImpl } from '@/src/infrastructure/repositories/MovieRepositoryImpl';
 import { CinemaRepositoryImpl } from '@/src/infrastructure/repositories/CinemaRepositoryImpl';
+import { PriceRepositoryImpl } from '@/src/infrastructure/repositories/PriceRepositoryImpl';
 import { getCinemas } from '@/src/application/useCases/Cinema/getCinemas';
+import { getPrices } from '@/src/application/useCases/price/getPrices';
 
 interface MovieDetailPageProps {
     params: {
@@ -19,10 +21,15 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
         const { filmId } = await params;
         const movie = await getMovieWithSessions(MovieRepositoryImpl, filmId, []);
         const cinemas = await getCinemas(CinemaRepositoryImpl);
+        const pricesData = await getPrices(PriceRepositoryImpl);
 
         return (
             <div className="min-h-screen">
-                <MovieDetailTemplate movie={movie} cinemas={cinemas} />
+                <MovieDetailTemplate 
+                    movie={movie} 
+                    cinemas={cinemas} 
+                    prices={pricesData.generalPrices}
+                />
             </div>
         );
     }

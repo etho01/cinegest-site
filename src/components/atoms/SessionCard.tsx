@@ -4,9 +4,10 @@ import { MovieSession } from '@/src/domain/Movie';
 
 interface SessionCardProps {
     session: MovieSession;
+    onClick?: () => void;
 }
 
-export function SessionCard({ session }: SessionCardProps) {
+export function SessionCard({ session, onClick }: SessionCardProps) {
     const formatTime = (datetime: string) => {
         return new Date(datetime).toLocaleTimeString('fr-FR', {
             hour: '2-digit',
@@ -24,7 +25,10 @@ export function SessionCard({ session }: SessionCardProps) {
     };
 
     return (
-        <button className="group relative bg-gray-800/50 hover:bg-gray-800 border border-gray-700 hover:border-red-500 rounded-lg p-3 transition-all duration-200">
+        <button 
+            onClick={onClick}
+            className="group relative bg-gray-800/50 hover:bg-gray-800 border border-gray-700 hover:border-red-500 rounded-lg p-3 transition-all duration-200"
+        >
             {/* Badges technologie */}
             <div className="flex flex-wrap gap-1 mb-2 min-h-[20px]">
                 {session.options?.map(option => (
