@@ -11,12 +11,18 @@ export const buttonVariants = cva(
             variant: {
                 default: 'cursor-pointer bg-primary text-white hover:bg-primary/90',
                 transparent: 'bg-transparent hover:bg-accent hover:text-accent-foreground',
+                outline: 'border border-gray-600 bg-transparent text-white hover:bg-gray-700',
+                ghost: 'bg-transparent hover:bg-gray-800 text-white',
+                link: 'text-red-500 hover:text-red-400 block w-full transition-colors cursor-pointer',
+                linkSecondary: 'bg-transparent text-gray-400 hover:text-white underline-offset-4 hover:underline cursor-pointer',
+
             },
             size: {
                 default: ' px-4 py-2',
                 sm: ' rounded-md px-1 py-1',
                 lg: ' rounded-md px-8',
                 icon: ' w-10',
+                none : '',
             },
         },
         defaultVariants: {

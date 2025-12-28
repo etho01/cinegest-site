@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react";
 import { Button } from "../atoms/Button";
+import { Input } from "../atoms/Input";
 import { requestPasswordResetController } from "@/src/controller/app/UserController";
 import { useAction } from "next-safe-action/hooks";
 
@@ -39,51 +40,48 @@ export default function ResetPasswordForm({ onSuccess, onSwitchToLogin }: ResetP
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+                <div className="bg-red-900/20 border border-red-800 text-red-400 px-4 py-3 rounded">
                     {error}
                 </div>
             )}
             
             {success && (
-                <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded">
+                <div className="bg-green-900/20 border border-green-800 text-green-400 px-4 py-3 rounded">
                     {success}
                 </div>
             )}
 
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-300">
                 Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
             </p>
 
-            <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Email
-                </label>
-                <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                />
-            </div>
+            <Input
+                label="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+            />
 
             <Button
                 type="submit"
                 className="w-full"
                 disabled={isResetting}
+                size="none"
             >
                 {isResetting ? "Chargement..." : "Envoyer le lien"}
             </Button>
 
             <div className="text-center space-y-2 text-sm">
-                <button
+                <Button
                     type="button"
                     onClick={onSwitchToLogin}
-                    className="text-blue-600 hover:text-blue-800 block w-full"
+                    variant="link"
+                    className="w-full"
+                    size="none"
                 >
                     Retour à la connexion
-                </button>
+                </Button>
             </div>
         </form>
     );

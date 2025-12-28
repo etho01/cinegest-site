@@ -68,7 +68,7 @@ export const Header = ({ pageTitle, page }: HeaderProps) => {
                                     </div>
                                     <Button
                                         onClick={handleLogout}
-                                        variant="outline"
+                                        variant="default"
                                         size="sm"
                                         className="flex items-center gap-2"
                                     >
@@ -79,7 +79,7 @@ export const Header = ({ pageTitle, page }: HeaderProps) => {
                             ) : (
                                 <Button
                                     onClick={() => setIsAuthModalOpen(true)}
-                                    variant="primary"
+                                    variant="default"
                                     size="sm"
                                 >
                                     Connexion / Inscription

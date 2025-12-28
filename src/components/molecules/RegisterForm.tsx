@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react";
 import { Button } from "../atoms/Button";
+import { Input } from "../atoms/Input";
 import { registerUserController } from "@/src/controller/app/UserController";
 import { useAction } from "next-safe-action/hooks";
 
@@ -56,120 +57,87 @@ export default function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFor
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
             {error && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+                <div className="bg-red-900/20 border border-red-800 text-red-400 px-4 py-3 rounded col-span-2">
                     {error}
                 </div>
             )}
             
             {success && (
-                <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded">
+                <div className="bg-green-900/20 border border-green-800 text-green-400 px-4 py-3 rounded col-span-2">
                     {success}
                 </div>
             )}
 
-            <div>
-                <label htmlFor="firstname" className="block text-sm font-medium text-gray-700 mb-1">
-                    Prénom
-                </label>
-                <input
-                    type="text"
-                    id="firstname"
-                    value={firstname}
-                    onChange={(e) => setFirstname(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                />
-            </div>
+            <Input
+                label="Prénom"
+                type="text"
+                value={firstname}
+                onChange={(e) => setFirstname(e.target.value)}
+                required
+            />
 
-            <div>
-                <label htmlFor="lastname" className="block text-sm font-medium text-gray-700 mb-1">
-                    Nom
-                </label>
-                <input
-                    type="text"
-                    id="lastname"
-                    value={lastname}
-                    onChange={(e) => setLastname(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                />
-            </div>
+            <Input
+                label="Nom"
+                type="text"
+                value={lastname}
+                onChange={(e) => setLastname(e.target.value)}
+                required
+            />
 
-            <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                    Téléphone (optionnel)
-                </label>
-                <input
-                    type="tel"
-                    id="phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-            </div>
+            <Input
+                label="Téléphone (optionnel)"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+            />
 
-            <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Email
-                </label>
-                <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                />
-            </div>
+            <Input
+                label="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+            />
 
-            <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                    Mot de passe
-                </label>
-                <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                    minLength={8}
-                />
-            </div>
+            <Input
+                label="Mot de passe"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={8}
+            />
 
-            <div>
-                <label htmlFor="passwordConfirmation" className="block text-sm font-medium text-gray-700 mb-1">
-                    Confirmer le mot de passe
-                </label>
-                <input
-                    type="password"
-                    id="passwordConfirmation"
-                    value={passwordConfirmation}
-                    onChange={(e) => setPasswordConfirmation(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                    minLength={8}
-                />
-            </div>
+            <Input
+                label="Confirmer le mot de passe"
+                type="password"
+                value={passwordConfirmation}
+                onChange={(e) => setPasswordConfirmation(e.target.value)}
+                required
+                minLength={8}
+            />
 
             <Button
                 type="submit"
-                className="w-full"
+                className="w-full col-span-2"
+                size="none"
                 disabled={isRegistering}
             >
                 {isRegistering ? "Chargement..." : "S'inscrire"}
             </Button>
 
-            <div className="text-center space-y-2 text-sm">
-                <button
+            <div className="text-center space-y-2 text-sm col-span-2">
+                <Button
                     type="button"
                     onClick={onSwitchToLogin}
-                    className="text-blue-600 hover:text-blue-800 block w-full"
+                    variant="link"
+                    className="w-full"
+                    size="none"
                 >
                     Déjà un compte ? Se connecter
-                </button>
+                </Button>
             </div>
         </form>
     );
