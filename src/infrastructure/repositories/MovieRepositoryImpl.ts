@@ -7,7 +7,6 @@ import { throwErrorResponse } from "@/src/lib/request/Request";
 export const MovieRepositoryImpl : MovieRepository = {
     getUpcomingMovies : async(cinemaId: number | undefined): Promise<Movie[]> => {
         const resp = await ApiRequestServeur.GET(`${process.env.API_URL}api/site/movie/upcoming`, {cinemaId}, {});
-        console.log(resp);
         await throwErrorResponse(resp);
 
         const text = await resp.text();
@@ -28,7 +27,6 @@ export const MovieRepositoryImpl : MovieRepository = {
 
         const text = await resp.text();
         const body = JSON.parse(text);
-        console.log(body);
         let movie = body["movie"];
         movie.sessions = body["sessions"];
         return movie as MovieWithSessions;

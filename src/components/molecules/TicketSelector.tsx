@@ -42,7 +42,7 @@ export function TicketSelector({ prices, sessionOptions = [], session, onSelecti
         prices.forEach(price => {
             const quantity = ticketQuantities[price.id] || 0;
             // Le prix de base + les options de séance s'appliquent à chaque billet
-            total += (price.amount + sessionOptionsTotal) * quantity;
+            total += ( parseFloat(price.amount.toString()) + parseFloat(sessionOptionsTotal.toString())) * quantity;
         });
 
         return total;
@@ -76,13 +76,6 @@ export function TicketSelector({ prices, sessionOptions = [], session, onSelecti
         });
     };
 
-    const handleSupplementQuantityChange = (optionId: number, change: number) => {
-        setSupplementQuantities(prev => {
-            const newQuantity = Math.max(0, (prev[optionId] || 0) + change);
-            return { ...prev, [optionId]: newQuantity };
-        });
-    };
-
     const formatPrice = (amount: number) => {
         return new Intl.NumberFormat('fr-FR', {
             style: 'currency',
@@ -108,7 +101,7 @@ export function TicketSelector({ prices, sessionOptions = [], session, onSelecti
                                     <p className="text-sm text-gray-400">{price.description}</p>
                                 </div>
                                 <div className="text-lg font-bold text-red-500">
-                                    {formatPrice(price.amount + sessionOptionsTotal)}
+                                    {formatPrice(parseFloat(price.amount.toString()) + parseFloat(sessionOptionsTotal.toString()))}
                                 </div>
                             </div>
                             

@@ -1,0 +1,61 @@
+✅ INTÉGRATION STRIPE TERMINÉE !
+
+📦 Ce qui a été installé :
+- stripe (SDK serveur)
+- @stripe/stripe-js (SDK client)
+
+🔧 Configuration nécessaire :
+
+1. Créez un fichier .env.local à la racine :
+   
+   STRIPE_SECRET_KEY=sk_test_votre_clé_ici
+   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_votre_clé_ici
+   NEXT_PUBLIC_BASE_URL=http://localhost:3000
+
+2. Obtenez vos clés Stripe sur : https://dashboard.stripe.com/apikeys
+
+🎬 Fonctionnalités implémentées :
+
+✅ Sélection de billets avec prix et options de séance
+✅ Calcul automatique du total
+✅ Création de session Stripe Checkout
+✅ Redirection vers le paiement Stripe
+✅ Pages de succès et d'annulation
+✅ États de chargement pendant la redirection
+✅ Validation des données
+
+📁 Fichiers créés/modifiés :
+
+Nouveaux fichiers :
+- src/lib/stripe.ts
+- src/domain/Booking.ts
+- src/controller/app/BookingController.ts
+- app/booking/success/page.tsx
+- app/booking/cancelled/page.tsx
+- .env.local.example
+- STRIPE_SETUP.md
+
+Modifiés :
+- src/components/molecules/BookingModal.tsx
+- src/components/molecules/TicketSummary.tsx
+- src/components/templates/MovieDetailTemplate.tsx
+
+🧪 Test en mode développement :
+
+Carte de test Stripe :
+- Numéro : 4242 4242 4242 4242
+- Date : n'importe quelle date future
+- CVC : 123
+- Code postal : 75001
+
+🚀 Pour tester :
+
+1. Configurez vos variables d'environnement
+2. Lancez le serveur : npm run dev
+3. Allez sur une page de film
+4. Cliquez sur une séance
+5. Sélectionnez vos billets
+6. Cliquez sur "Procéder au paiement"
+7. Utilisez la carte de test ci-dessus
+
+📚 Documentation complète dans STRIPE_SETUP.md

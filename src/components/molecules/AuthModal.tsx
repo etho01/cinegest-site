@@ -12,9 +12,10 @@ interface AuthModalProps {
     onClose: () => void;
     initialMode?: AuthMode;
     onSuccess?: () => void;
+    onAuthSuccess?: () => void;
 }
 
-export default function AuthModal({ isOpen, onClose, initialMode = "login", onSuccess }: AuthModalProps) {
+export default function AuthModal({ isOpen, onClose, initialMode = "login", onSuccess, onAuthSuccess }: AuthModalProps) {
     const [mode, setMode] = useState<AuthMode>(initialMode);
 
     const getTitle = () => {
@@ -30,6 +31,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login", onSu
 
     const handleSuccess = () => {
         if (onSuccess) onSuccess();
+        if (onAuthSuccess) onAuthSuccess();
         onClose();
     };
 

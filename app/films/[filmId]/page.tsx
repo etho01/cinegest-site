@@ -19,6 +19,12 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
 
     try {
         const { filmId } = await params;
+        
+        // Filtrer les fichiers de développement (source maps, etc.)
+        if (filmId.includes('.js') || filmId.includes('.map') || filmId.includes('.css')) {
+            throw new Error('Invalid film ID');
+        }
+        
         const movie = await getMovieWithSessions(MovieRepositoryImpl, filmId, []);
         const cinemas = await getCinemas(CinemaRepositoryImpl);
         const pricesData = await getPrices(PriceRepositoryImpl);

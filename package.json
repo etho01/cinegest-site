@@ -9,12 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^5.4.1",
+    "@stripe/stripe-js": "^8.6.0",
     "class-variance-authority": "^0.7.1",
     "next": "16.0.8",
     "next-safe-action": "^8.0.11",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "react-select": "^5.10.2",
+    "stripe": "^20.1.0",
     "swiper": "^12.0.3",
     "tailwind-merge": "^3.4.0"
   },

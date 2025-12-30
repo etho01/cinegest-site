@@ -12,7 +12,6 @@ interface CinemaSessionsProps {
 export function CinemaSessions({ cinemas, sessions, selectedDate, onSessionClick }: CinemaSessionsProps) {
     // Filtrer les séances par date sélectionnée
     const filteredSessions = sessions.filter(session => {
-        console.log(session);
         const sessionDate = new Date(session.startTime).toISOString().split('T')[0];
         return sessionDate === selectedDate;
     });

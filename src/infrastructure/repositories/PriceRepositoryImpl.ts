@@ -11,7 +11,6 @@ export const PriceRepositoryImpl : PriceRepository = {
 
         const text = await resp.text();
         const body = JSON.parse(text);
-        console.log("PricesData fetched:", body);
         return body as PricesData;
     }
 }
