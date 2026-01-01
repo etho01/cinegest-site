@@ -1,16 +1,28 @@
 "use client";
 import { Cinema } from "@/src/domain/Cinema";
 import { Select } from "../atoms/Select";
+import { useCinema } from "@/src/context/CinemaContext";
+import { useRouter } from "next/navigation";
 
 interface ListCinemaProps {
     cinemas: Cinema[];
 }
 
 export const ListCinema = ({ cinemas }: ListCinemaProps) => {
+    const { selectedCinemaId, setSelectedCinemaId } = useCinema();
+    const router = useRouter();
+
     if (cinemas.length === 1) 
     {
         return null;
     }
+
+    const handleCinemaChange = (cinemaId: any) => {
+        console.log('Cinema selected:', cinemaId);
+        setSelectedCinemaId(cinemaId);
+        // Rafraîchir la page pour recharger les données avec le nouveau cinéma
+        router.refresh();
+    };
 
     const selectStyles = {
         control: (base: any) => ({
@@ -59,6 +71,18 @@ export const ListCinema = ({ cinemas }: ListCinemaProps) => {
             <Select
                 styles={selectStyles}
                 placeholder="Selectionner un cinéma"
+                value={
+                    selectedCinemaId 
+                        ? cinemas.find(c => c.id === selectedCinemaId) 
+                            ? { 
+                                value: selectedCinemaId, 
+                                label: cinemas.find(c => c.id === selectedCinemaId)!.name + ' - ' + cinemas.find(c => c.id === selectedCinemaId)!.city
+                              }
+                            : null
+                        : null
+                }
+                onChange={handleCinemaChange}
+                isClearable
                 options={
                     cinemas.map(cinema => ({
                         value: cinema.id,

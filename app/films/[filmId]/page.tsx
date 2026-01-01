@@ -8,6 +8,7 @@ import { CinemaRepositoryImpl } from '@/src/infrastructure/repositories/CinemaRe
 import { PriceRepositoryImpl } from '@/src/infrastructure/repositories/PriceRepositoryImpl';
 import { getCinemas } from '@/src/application/useCases/Cinema/getCinemas';
 import { getPrices } from '@/src/application/useCases/price/getPrices';
+import { getSelectedCinemaId } from '@/src/lib/cinema-cookie';
 
 interface MovieDetailPageProps {
     params: {
@@ -25,7 +26,10 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
             throw new Error('Invalid film ID');
         }
         
-        const movie = await getMovieWithSessions(MovieRepositoryImpl, filmId, []);
+        const selectedCinemaId = await getSelectedCinemaId();
+        const cinemaIds = selectedCinemaId ? [selectedCinemaId.toString()] : [];
+        
+        const movie = await getMovieWithSessions(MovieRepositoryImpl, filmId, cinemaIds);
         const cinemas = await getCinemas(CinemaRepositoryImpl);
         const pricesData = await getPrices(PriceRepositoryImpl);
 

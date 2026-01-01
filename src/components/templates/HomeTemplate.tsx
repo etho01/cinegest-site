@@ -6,11 +6,15 @@ import { MovieSwiper } from "../organisms/MovieSwiper";
 import { getWeeklyMovies } from "@/src/application/useCases/movie/getWeeklyMovies";
 import { MovieRepositoryImpl } from "@/src/infrastructure/repositories/MovieRepositoryImpl";
 import { getUpcomingMovies } from "@/src/application/useCases/movie/getUpcomingMovies";
+import { getSelectedCinemaId } from "@/src/lib/cinema-cookie";
 
 export default async function HomeTemplate() {
+    const selectedCinemaId = await getSelectedCinemaId();
     const cinemas = await getCinemas(CinemaRepositoryImpl);
-    const weeklyMovies = await getWeeklyMovies(MovieRepositoryImpl, undefined);
-    const upcomingMovies = await getUpcomingMovies(MovieRepositoryImpl, undefined);
+    const weeklyMovies = await getWeeklyMovies(MovieRepositoryImpl, selectedCinemaId);
+    const upcomingMovies = await getUpcomingMovies(MovieRepositoryImpl, selectedCinemaId);
+
+    console.log('Selected Cinema ID in HomeTemplate:', selectedCinemaId);
 
     return (
         <>
