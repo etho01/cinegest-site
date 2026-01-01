@@ -26,3 +26,27 @@ export interface BookingResponse {
     bookingId: string;
     checkoutUrl: string;
 }
+
+export interface UserBooking {
+    id: number;
+    sessionId: number;
+    totalAmount: number;
+    status: string;
+    createdAt: string;
+    items: BookingItem[];
+    session: {
+        id: number;
+        date: string;
+        time: string;
+        cinema: {
+            id: number;
+            name: string;
+            address: string;
+        };
+        movie: {
+            id: number;
+            title: string;
+            posterUrl?: string;
+        };
+    };
+}

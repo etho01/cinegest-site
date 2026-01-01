@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { BookingRepositoryImpl } from '@/src/infrastructure/repositories/BookingRepositoryImpl';
 import { createPaymentIntent as createPaymentIntentUseCase } from '@/src/application/useCases/Booking/createPaymentIntent';
 import { confirmBooking as confirmBookingUseCase } from '@/src/application/useCases/Booking/confirmBooking';
+import { getUserBookings as getUserBookingsUseCase } from '@/src/application/useCases/Booking/getUserBookings';
 import { getMeController } from './AuthController';
 
 const bookingSchema = z.object({
@@ -61,3 +62,15 @@ export const confirmBooking = actionClient
             success: result.success,
         };
     });
+
+// Action pour récupérer les réservations de l'utilisateur connecté
+export const getUserBookings = async () => {
+    // Vérifier que l'utilisateur est connecté
+    const user = await getMeController();
+    if (!user) {
+        throw new Error('Utilisateur non authentifié');
+    }
+
+    const bookings = await getUserBookingsUseCase(BookingRepositoryImpl);
+    return bookings;
+};

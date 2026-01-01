@@ -29,7 +29,7 @@ export default function BookingSuccessPage() {
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link 
-                            href="/profile"
+                            href="/reservations"
                             className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition"
                         >
                             Voir mes réservations

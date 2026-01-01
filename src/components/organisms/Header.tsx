@@ -56,6 +56,11 @@ export const Header = ({ pageTitle, page }: HeaderProps) => {
                     <LinkButton className={'text-lg ' + (page === 'prix' ? 'font-bold' : '')} size="sm" variant="transparent" href="/prix">
                         Prix
                     </LinkButton>
+                    {user && (
+                        <LinkButton className={'text-lg ' + (page === 'reservations' ? 'font-bold' : '')} size="sm" variant="transparent" href="/reservations">
+                            Mes réservations
+                        </LinkButton>
+                    )}
                 </div>
                 <div className="flex gap-4 items-center">
                     {!isLoading && (

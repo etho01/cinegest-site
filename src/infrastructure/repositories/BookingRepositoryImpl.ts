@@ -1,5 +1,5 @@
 import { BookingRepository } from "@/src/application/repositories/BookingRepository";
-import { BookingRequest, PaymentIntentResponse, BookingConfirmation } from "@/src/domain/Booking";
+import { BookingRequest, PaymentIntentResponse, BookingConfirmation, UserBooking } from "@/src/domain/Booking";
 import { ApiRequestServeur } from "@/src/lib/request/ApiRequestServeur";
 import { throwErrorResponse } from "@/src/lib/request/Request";
 
@@ -38,5 +38,21 @@ export const BookingRepositoryImpl: BookingRepository = {
             bookingId: body.bookingId,
             success: true,
         };
+    },
+
+    getUserBookings: async (): Promise<UserBooking[]> => {
+        const apiUrl = process.env.API_URL || 'http://localhost:8000/';
+        const response = await ApiRequestServeur.GET(
+            `${apiUrl}api/site/me/bookings`,
+            {},
+            {}
+        );
+
+        await throwErrorResponse(response);
+
+        const text = await response.text();
+        const body = JSON.parse(text);
+
+        return body as UserBooking[];
     }
 };
