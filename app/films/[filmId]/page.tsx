@@ -27,7 +27,13 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
         }
         
         const selectedCinemaId = await getSelectedCinemaId();
-        const cinemaIds = selectedCinemaId ? [selectedCinemaId.toString()] : [];
+        let cinemaIds: string[];
+
+        if (selectedCinemaId !== undefined) {
+            cinemaIds = [selectedCinemaId.toString()];
+        } else {
+            cinemaIds = [];
+        }
         
         const movie = await getMovieWithSessions(MovieRepositoryImpl, filmId, cinemaIds);
         const cinemas = await getCinemas(CinemaRepositoryImpl);

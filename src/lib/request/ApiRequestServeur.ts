@@ -19,7 +19,7 @@ export class ApiRequestServeur {
     }
 
     static async GET(url: string, params: any, header: Record<string, string> = {}): Promise<Response> {
-        url = withSearchParams(url, params);
+        url = withSearchParams(url, params)
         const headers = await ApiRequestServeur.getHeader(header);
         return fetch(url, {
             method: "GET",

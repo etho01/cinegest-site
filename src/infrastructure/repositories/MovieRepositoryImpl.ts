@@ -22,7 +22,7 @@ export const MovieRepositoryImpl : MovieRepository = {
         return body as Movie[];
     },
     getMovieWithSessions : async(movieId: string, cinemaIds: string[]): Promise<MovieWithSessions> => {
-        const resp = await ApiRequestServeur.GET(`${process.env.API_URL}api/site/movie/${movieId}/sessions`, {cinemaIds: cinemaIds.join(',')}, {});
+        const resp = await ApiRequestServeur.GET(`${process.env.API_URL}api/site/movie/${movieId}/sessions`, {cinemaIds: cinemaIds}, {});
         await throwErrorResponse(resp);
 
         const text = await resp.text();
