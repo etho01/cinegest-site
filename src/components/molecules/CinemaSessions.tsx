@@ -1,6 +1,8 @@
+'use client';
 import { Cinema } from '@/src/domain/Cinema';
 import { MovieSession } from '@/src/domain/Movie';
 import { SessionCard } from '../atoms/SessionCard';
+import { useCinema } from '@/src/context/CinemaContext';
 
 interface CinemaSessionsProps {
     cinemas: Cinema[];
@@ -10,6 +12,13 @@ interface CinemaSessionsProps {
 }
 
 export function CinemaSessions({ cinemas, sessions, selectedDate, onSessionClick }: CinemaSessionsProps) {
+    const { selectedCinemaId } = useCinema();
+    
+    // Filtrer les cinémas si un est sélectionné
+    const displayedCinemas = selectedCinemaId 
+        ? cinemas.filter(cinema => cinema.id === selectedCinemaId)
+        : cinemas;
+
     // Filtrer les séances par date sélectionnée
     const filteredSessions = sessions.filter(session => {
         const sessionDate = new Date(session.startTime).toISOString().split('T')[0];
@@ -23,8 +32,7 @@ export function CinemaSessions({ cinemas, sessions, selectedDate, onSessionClick
         return acc;
     }, {} as Record<string, MovieSession[]>);
 
-
-    if (cinemas.length === 0) {
+    if (displayedCinemas.length === 0) {
         return (
             <div className="text-center py-12">
                 <p className="text-gray-400">Aucune séance disponible pour cette date.</p>
@@ -32,9 +40,10 @@ export function CinemaSessions({ cinemas, sessions, selectedDate, onSessionClick
         );
     }
 
+
     return (
         <div className="space-y-4">
-            {cinemas.map(cinema => {
+            {displayedCinemas.map(cinema => {
                 const cinemaSessions = sessionsByCinema[cinema.id.toString()];
 
                 return (

@@ -17,7 +17,7 @@ export const ListCinema = ({ cinemas }: ListCinemaProps) => {
         return null;
     }
 
-    const handleCinemaChange = (cinemaId: any) => {
+    const handleCinemaChange = (cinemaId : number | undefined) => {
         console.log('Cinema selected:', cinemaId);
         setSelectedCinemaId(cinemaId);
         // Rafraîchir la page pour recharger les données avec le nouveau cinéma
@@ -64,6 +64,10 @@ export const ListCinema = ({ cinemas }: ListCinemaProps) => {
         }),
     };
 
+    const selectedCinema = selectedCinemaId ? cinemas.find(c => c.id === selectedCinemaId) : null;
+    const selectedValue = selectedCinema ? selectedCinema.id : null;
+
+
     return (
         <div 
             className="max-w-7xl mx-auto bg-[#1b1d23] rounded-lg mt-5 border-[#bcbdbe] group border border-opacity-10 py-2">
@@ -71,16 +75,7 @@ export const ListCinema = ({ cinemas }: ListCinemaProps) => {
             <Select
                 styles={selectStyles}
                 placeholder="Selectionner un cinéma"
-                value={
-                    selectedCinemaId 
-                        ? cinemas.find(c => c.id === selectedCinemaId) 
-                            ? { 
-                                value: selectedCinemaId, 
-                                label: cinemas.find(c => c.id === selectedCinemaId)!.name + ' - ' + cinemas.find(c => c.id === selectedCinemaId)!.city
-                              }
-                            : null
-                        : null
-                }
+                value={selectedValue}
                 onChange={handleCinemaChange}
                 isClearable
                 options={
