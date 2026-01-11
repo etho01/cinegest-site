@@ -10,6 +10,7 @@ import { MovieSession } from '@/src/domain/Movie';
 import { Price, PriceOption } from '@/src/domain/Price';
 import { createPaymentIntent, confirmBooking } from '@/src/controller/app/BookingController';
 import Modal from '../atoms/Modal';
+import { useAction } from 'next-safe-action/hooks';
 
 // Initialiser Stripe
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
@@ -32,6 +33,7 @@ export function BookingModal({ isOpen, onClose, session, prices, sessionOptions 
     const [showPayment, setShowPayment] = useState(false);
     const [clientSecret, setClientSecret] = useState<string | null>(null);
     const [paymentIntentId, setPaymentIntentId] = useState<string | null>(null);
+    const [erreur, setErreur] = useState<string | null>(null);
 
     const handleSelectionChange = (
         newTickets: TicketSelection[],
@@ -43,9 +45,11 @@ export function BookingModal({ isOpen, onClose, session, prices, sessionOptions 
         setTotal(newTotal);
     };
 
+    const { executeAsync, hasErrored, result, input } = useAction(createPaymentIntent)
+
     const handleConfirm = async () => {
         if (tickets.length === 0) {
-            alert('Veuillez sélectionner au moins un billet');
+            setErreur('Veuillez sélectionner au moins un billet');
             return;
         }
 
@@ -56,17 +60,25 @@ export function BookingModal({ isOpen, onClose, session, prices, sessionOptions 
                 ticket['priceAmount'] = parseFloat(ticket['priceAmount'] + '');
             }
 
-            const result = await createPaymentIntent({
+            const result = await executeAsync({
                 sessionId: session.id,
                 items: tickets,
                 totalAmount: parseFloat(total.toString()),
             });
 
+            console.log('Résultat de la création de l\'intention de paiement:', result);
+
             if (result?.data?.clientSecret) {
                 setClientSecret(result.data.clientSecret);
                 setPaymentIntentId(result.data.paymentIntentId);
                 setShowPayment(true);
-            } else {
+            }
+            else if (result?.serverError)
+            {
+                setErreur(result.serverError || 'Une erreur est survenue lors de la création du paiement. Veuillez réessayer.');
+            }
+            else 
+            {
                 throw new Error('Impossible de créer l\'intention de paiement');
             }
         } catch (error) {
@@ -111,7 +123,7 @@ export function BookingModal({ isOpen, onClose, session, prices, sessionOptions 
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={handleCloseModal} size="full">
+        <Modal isOpen={isOpen} onClose={handleCloseModal} size="full" error={erreur}>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {!showPayment && (
                     <>

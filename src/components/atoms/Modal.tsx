@@ -7,6 +7,7 @@ interface ModalProps {
     children: React.ReactNode;
     title?: string;
     size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
+    error?: string | null;
 }
 
 const sizeClasses = {
@@ -18,7 +19,7 @@ const sizeClasses = {
     'full': 'max-w-7xl'
 };
 
-export default function Modal({ isOpen, onClose, children, title, size = 'md' }: ModalProps) {
+export default function Modal({ isOpen, onClose, children, title, size = 'md', error }: ModalProps) {
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -70,6 +71,20 @@ export default function Modal({ isOpen, onClose, children, title, size = 'md' }:
                         </svg>
                     </button>
                 </div>
+                
+                {/* Message d'erreur */}
+                {error && (
+                    <div className="mx-6 mt-4 bg-red-900/30 border border-red-600 rounded-lg p-4 flex items-start gap-3">
+                        <svg className="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div className="flex-1">
+                            <h3 className="text-red-500 font-semibold mb-1">Erreur</h3>
+                            <p className="text-red-300 text-sm">{error}</p>
+                        </div>
+                    </div>
+                )}
+                
                 <div className="p-6">
                     {children}
                 </div>
