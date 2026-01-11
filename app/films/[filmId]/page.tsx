@@ -9,11 +9,31 @@ import { PriceRepositoryImpl } from '@/src/infrastructure/repositories/PriceRepo
 import { getCinemas } from '@/src/application/useCases/Cinema/getCinemas';
 import { getPrices } from '@/src/application/useCases/price/getPrices';
 import { getSelectedCinemaId } from '@/src/lib/cinema-cookie';
+import { Metadata } from 'next';
 
 interface MovieDetailPageProps {
     params: {
         filmId: string;
     };
+}
+
+export async function generateMetadata({ params }: MovieDetailPageProps): Promise<Metadata> {
+    try {
+        const { filmId } = await params;
+        const selectedCinemaId = await getSelectedCinemaId();
+        const cinemaIds = selectedCinemaId ? [selectedCinemaId.toString()] : [];
+        const movie = await getMovieWithSessions(MovieRepositoryImpl, filmId, cinemaIds);
+        
+        return {
+            title: movie.title,
+            description: movie.description || `Découvrez ${movie.title}, actuellement au cinéma. Réservez vos places en ligne.`,
+        };
+    } catch {
+        return {
+            title: 'Film non trouvé',
+            description: 'Le film que vous recherchez n\'existe pas.',
+        };
+    }
 }
 
 export default async function MovieDetailPage({ params }: MovieDetailPageProps) {

@@ -1,5 +1,11 @@
 import { Header } from '@/src/components/organisms/Header';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Réservation Confirmée',
+  description: 'Votre réservation a été confirmée avec succès.',
+};
 
 export default function BookingSuccessPage() {
     return (
