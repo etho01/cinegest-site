@@ -20,7 +20,7 @@ interface BookingModalProps {
     session: MovieSession;
     prices: Price[];
     sessionOptions?: PriceOption[];
-    movieId: string;
+    movieId: number;
     movieTitle?: string;
 }
 
