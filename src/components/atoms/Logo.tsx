@@ -2,7 +2,7 @@
 export const Logo = () => {
     return (
         <div>
-            <h1>My Logo</h1>
+            <img src="/assets/images/image.png" alt="Cinegest Logo" className="h-10 w-auto" />
         </div>
     );
 }

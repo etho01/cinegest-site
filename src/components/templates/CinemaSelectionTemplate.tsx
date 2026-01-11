@@ -17,7 +17,7 @@ export function CinemaSelectionTemplate({ cinemas }: CinemaSelectionTemplateProp
     };
 
     return (
-        <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white py-12">
+        <main className=" bg-gradient-to-b from-gray-900 to-primary text-white py-12">
             <div className="container mx-auto px-4">
                 {/* En-tête */}
                 <div className="text-center mb-12">
