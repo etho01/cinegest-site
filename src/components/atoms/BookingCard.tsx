@@ -109,7 +109,7 @@ export function BookingCard({ booking }: BookingCardProps) {
                         </div>
                         <div className="flex justify-between font-bold text-white mt-3 pt-3 border-t border-gray-700">
                             <span>Total</span>
-                            <span>{booking.totalAmount.toFixed(2)}€</span>
+                            <span>{parseFloat(booking.totalAmount + '').toFixed(2)}€</span>
                         </div>
                     </div>
 
