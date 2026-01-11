@@ -1,5 +1,6 @@
 import { Movie } from '@/src/domain/Movie';
 import Image from 'next/image';
+import { formatDate } from '@/src/utils';
 
 interface MovieHeroProps {
     movie: Movie;
@@ -59,7 +60,7 @@ export function MovieHero({ movie }: MovieHeroProps) {
                         {/* Date de sortie et équipe */}
                         <div className="space-y-2 text-gray-300">
                             <div>
-                                <span className="font-semibold">Sortie :</span> {movie.releaseDate}
+                                <span className="font-semibold">Sortie :</span> {formatDate(movie.releaseDate)}
                             </div>
                             {movie.cast && movie.cast.length > 0 && (
                                 <div>

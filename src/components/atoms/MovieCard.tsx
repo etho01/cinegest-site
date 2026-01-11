@@ -1,4 +1,5 @@
 import { Movie } from "@/src/domain/Movie";
+import { formatDate } from "@/src/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -32,7 +33,7 @@ export function MovieCard({ movie }: MovieCardProps) {
                     {/* Informations au hover */}
                     <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                         <h3 className="font-bold text-sm mb-1 line-clamp-2">{movie.title}</h3>
-                        <p className="text-xs opacity-90">{movie.releaseDate}</p>
+                        <p className="text-xs opacity-90">{formatDate(movie.releaseDate)}</p>
                         {movie.genres && movie.genres.length > 0 && (
                             <p className="text-xs opacity-75 mt-1">{movie.genres.join(', ')}</p>
                         )}
