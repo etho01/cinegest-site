@@ -19,6 +19,14 @@ export const metadata: Metadata = {
     template: "%s",
   },
   description: "Réservez vos billets de cinéma en ligne facilement. Découvrez les films à l'affiche, consultez les horaires et réservez vos places.",
+  icons: {
+    icon: [
+      { url: '/icon.png' },
+      { url: '/favicon.ico' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/icon.png',
+  },
 };
 
 export default function RootLayout({
