@@ -18,7 +18,6 @@ export const ListCinema = ({ cinemas }: ListCinemaProps) => {
     }
 
     const handleCinemaChange = (cinemaId : number | undefined) => {
-        console.log('Cinema selected:', cinemaId);
         setSelectedCinemaId(cinemaId);
         // Rafraîchir la page pour recharger les données avec le nouveau cinéma
         router.refresh();

@@ -10,7 +10,6 @@ export const BookingRepositoryImpl: BookingRepository = {
             `${apiUrl}api/site/booking/payment-intent`,
             bookingData
         );
-        console.log(response);
         await throwErrorResponse(response);
 
         const text = await response.text();

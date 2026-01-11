@@ -14,8 +14,6 @@ export default async function HomeTemplate() {
     const weeklyMovies = await getWeeklyMovies(MovieRepositoryImpl, selectedCinemaId);
     const upcomingMovies = await getUpcomingMovies(MovieRepositoryImpl, selectedCinemaId);
 
-    console.log('Selected Cinema ID in HomeTemplate:', selectedCinemaId);
-
     return (
         <>
             <Header page="home" />

@@ -33,8 +33,6 @@ export function BookingCard({ booking }: BookingCardProps) {
         );
     };
 
-    console.log(booking);
-
     return (
         <div className="bg-gray-800 rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
             <div className="md:flex">

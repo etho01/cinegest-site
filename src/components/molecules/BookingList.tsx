@@ -6,7 +6,6 @@ interface BookingListProps {
 }
 
 export function BookingList({ bookings }: BookingListProps) {
-    console.log(bookings);
 
     if (bookings.length === 0) {
         return (

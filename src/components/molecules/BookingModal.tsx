@@ -57,12 +57,10 @@ export function BookingModal({ isOpen, onClose, session, prices, sessionOptions 
             }
 
             const result = await createPaymentIntent({
-                sessionId: parseInt(session.id),
+                sessionId: session.id,
                 items: tickets,
                 totalAmount: parseFloat(total.toString()),
             });
-            
-            console.log('Payment Intent Result:', result);
 
             if (result?.data?.clientSecret) {
                 setClientSecret(result.data.clientSecret);

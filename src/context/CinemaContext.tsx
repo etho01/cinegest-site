@@ -50,7 +50,6 @@ export function CinemaProvider({ children }: { children: ReactNode }) {
 
     const setSelectedCinemaId = (cinemaId: number | undefined) => {
         setSelectedCinemaIdState(cinemaId);
-        console.log('Setting cinema ID in cookie:', cinemaId);
         
         if (cinemaId !== undefined) {
             setCookie(CINEMA_COOKIE_NAME, cinemaId.toString(), COOKIE_EXPIRY_DAYS);

@@ -1,5 +1,5 @@
 export interface Movie {
-    id: string;
+    id: number;
     title: string;
     posterUrl: string;
     releaseDate: string;
@@ -26,9 +26,9 @@ export interface Option {
 
 
 export interface MovieSession {
-    id: string;
-    movieId: string;
-    cinemaId: string;
+    id: number;
+    movieId: number;
+    cinemaId: number;
     startTime: string; // ISO string
     options?: Option[]; // ex: ["Sous-titré", "Audio Description"]
 }
