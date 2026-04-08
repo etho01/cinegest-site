@@ -56,7 +56,7 @@ export function BookingModal({ isOpen, onClose, session, prices, sessionOptions 
         setIsLoading(true);
 
         try {
-            for (let ticket of tickets) {
+            for (const ticket of tickets) {
                 ticket['priceAmount'] = parseFloat(ticket['priceAmount'] + '');
             }
 

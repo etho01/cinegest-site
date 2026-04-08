@@ -20,7 +20,6 @@ interface SelectPropsWithOptions extends SelectProps {
 }
 
 export const Select = ( {className = '', options, onChange, value, initialValue, isMulti = false, ...props}: SelectPropsWithOptions) => {
-    let htmlFor = "";
     let defaultValue : any = isMulti ? [] : null;
     options.forEach(option => {
         if (isMulti && Array.isArray(value)) {
@@ -43,10 +42,6 @@ export const Select = ( {className = '', options, onChange, value, initialValue,
     }
 
     const [selectedValue, setSelectedValue] = useState<any>(defaultValue);
-    if (props['id'] != undefined)
-    {
-        htmlFor = props['id']
-    }
 
     const execOnChange = (selectedOption: any) => {
         if (onChange) {
@@ -80,7 +75,7 @@ export const Select = ( {className = '', options, onChange, value, initialValue,
         }
         
         setSelectedValue(selectedOption);
-    }, [value]);
+    }, [value, options, isMulti]);
     
     useEffect(() => {
         if (initialValue === undefined) {
@@ -97,7 +92,7 @@ export const Select = ( {className = '', options, onChange, value, initialValue,
         }
 
         setSelectedValue(selectedOption);
-    }, [initialValue]);
+    }, [initialValue, options, isMulti]);
 
     return (
         <SelectReact styles={props.styles} value={selectedValue} className={className} isMulti={isMulti} options={options} onChange={onChangeFunction} {...props} />

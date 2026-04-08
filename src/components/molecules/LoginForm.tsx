@@ -87,7 +87,7 @@ export default function LoginForm({ onSuccess, onSwitchToRegister, onSwitchToRes
                     size="none"
                     className="w-full"
                 >
-                    Pas encore de compte ? S'inscrire
+                    Pas encore de compte ? S&apos;inscrire
                 </Button>
                 <Button
                     type="button"

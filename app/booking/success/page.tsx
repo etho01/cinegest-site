@@ -28,7 +28,7 @@ export default function BookingSuccessPage() {
                         <div className="bg-gray-800/50 rounded-lg p-4 mb-6">
                             <p className="text-sm text-gray-400">
                                 Vos billets électroniques ont été envoyés à votre adresse email.
-                                Présentez-les à l'entrée du cinéma ou sur votre smartphone.
+                                Présentez-les à l&apos;entrée du cinéma ou sur votre smartphone.
                             </p>
                         </div>
                     </div>
@@ -44,7 +44,7 @@ export default function BookingSuccessPage() {
                             href="/"
                             className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition"
                         >
-                            Retour à l'accueil
+                            Retour à l&apos;accueil
                         </Link>
                     </div>
                 </div>

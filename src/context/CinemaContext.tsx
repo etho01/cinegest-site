@@ -37,7 +37,6 @@ function deleteCookie(name: string) {
 
 export function CinemaProvider({ children }: { children: ReactNode }) {
     const [selectedCinemaId, setSelectedCinemaIdState] = useState<number | undefined>(undefined);
-    const [isInitialized, setIsInitialized] = useState(false);
 
     // Charger le cinéma sélectionné depuis le cookie au montage
     useEffect(() => {
@@ -45,7 +44,6 @@ export function CinemaProvider({ children }: { children: ReactNode }) {
         if (savedCinemaId) {
             setSelectedCinemaIdState(parseInt(savedCinemaId, 10));
         }
-        setIsInitialized(true);
     }, []);
 
     const setSelectedCinemaId = (cinemaId: number | undefined) => {

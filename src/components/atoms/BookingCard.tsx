@@ -47,7 +47,7 @@ export function BookingCard({ booking }: BookingCardProps) {
                         />
                     ) : (
                         <div className="w-full h-full bg-gray-700 flex items-center justify-center">
-                            <span className="text-gray-500">Pas d'affiche</span>
+                            <span className="text-gray-500">Pas d&apos;affiche</span>
                         </div>
                     )}
                 </div>

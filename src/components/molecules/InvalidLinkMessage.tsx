@@ -12,7 +12,7 @@ export default function InvalidLinkMessage() {
                 Le lien de réinitialisation est invalide ou a expiré.
             </p>
             <Button onClick={() => router.push("/")} variant="default">
-                Retour à l'accueil
+                Retour à l&apos;accueil
             </Button>
         </div>
     );

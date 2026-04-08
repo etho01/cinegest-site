@@ -33,7 +33,7 @@ export const getMeController = async() => {
     try {
         const user = await me(UserRepositoryImpl);
         return user;
-    } catch (error) {
+    } catch (_) {
         return null;
     }
 };

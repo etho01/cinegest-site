@@ -27,7 +27,7 @@ export const MovieRepositoryImpl : MovieRepository = {
 
         const text = await resp.text();
         const body = JSON.parse(text);
-        let movie = body["movie"];
+        const movie = body["movie"];
         movie.sessions = body["sessions"];
         return movie as MovieWithSessions;
     }

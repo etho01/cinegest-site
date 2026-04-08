@@ -20,7 +20,7 @@ export default function ProfileTemplate() {
         try {
             const userData = await getMeController();
             setUser(userData);
-        } catch (error) {
+        } catch (_) {
             router.push("/");
         } finally {
             setIsLoading(false);
@@ -105,7 +105,7 @@ export default function ProfileTemplate() {
                                     </h3>
                                     <p className="text-sm text-gray-400">
                                         Vos informations personnelles sont sécurisées et ne seront jamais partagées avec des tiers. 
-                                        Pour toute question concernant vos données, n'hésitez pas à nous contacter.
+                                        Pour toute question concernant vos données, n&apos;hésitez pas à nous contacter.
                                     </p>
                                 </div>
                             </div>

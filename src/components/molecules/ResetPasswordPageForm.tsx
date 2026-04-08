@@ -111,7 +111,7 @@ export default function ResetPasswordForm({ email, token }: ResetPasswordFormPro
                     className="text-sm"
                     size="none"
                 >
-                    Retour à l'accueil
+                    Retour à l&apos;accueil
                 </Button>
             </div>
         </form>

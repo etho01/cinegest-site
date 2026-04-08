@@ -1,5 +1,6 @@
 import { UserBooking } from "@/src/domain/Booking";
 import { BookingCard } from "../atoms/BookingCard";
+import Link from "next/link";
 
 interface BookingListProps {
     bookings: UserBooking[];
@@ -17,14 +18,14 @@ export function BookingList({ bookings }: BookingListProps) {
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">Aucune réservation</h3>
                 <p className="text-gray-400 mb-6">
-                    Vous n'avez pas encore effectué de réservation.
+                    Vous n&apos;avez pas encore effectué de réservation.
                 </p>
-                <a 
+                <Link 
                     href="/"
                     className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition"
                 >
                     Découvrir les films
-                </a>
+                </Link>
             </div>
         );
     }

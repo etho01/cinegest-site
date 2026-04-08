@@ -23,7 +23,7 @@ export default function BookingCancelledPage() {
                             Réservation annulée
                         </h1>
                         <p className="text-gray-300 mb-6">
-                            Votre réservation a été annulée. Aucun paiement n'a été effectué.
+                            Votre réservation a été annulée. Aucun paiement n&apos;a été effectué.
                         </p>
                         <div className="bg-gray-800/50 rounded-lg p-4 mb-6">
                             <p className="text-sm text-gray-400">
@@ -37,7 +37,7 @@ export default function BookingCancelledPage() {
                             href="/"
                             className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition"
                         >
-                            Retour à l'accueil
+                            Retour à l&apos;accueil
                         </Link>
                     </div>
                 </div>
