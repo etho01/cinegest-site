@@ -1,0 +1,14 @@
+name: commit Quality check
+
+on:
+  push:
+    branches: [*]
+
+jobs:
+  quality:
+    name: Quality check
+    uses: ./github/quality-check.yml
+
+  sast:
+    name: SAST
+    uses: ./github/sast.yml
