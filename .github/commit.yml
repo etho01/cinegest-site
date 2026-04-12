@@ -2,8 +2,8 @@ name: commit Quality check
 
 on:
   push:
-    branches: [*]
-
+    branches:
+      - '**'
 jobs:
 
   sast:
