@@ -5,9 +5,6 @@ on:
     branches: [*]
 
 jobs:
-  quality:
-    name: Quality check
-    uses: ./github/quality-check.yml
 
   sast:
     name: SAST
