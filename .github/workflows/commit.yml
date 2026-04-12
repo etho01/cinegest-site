@@ -8,4 +8,4 @@ jobs:
 
   sast:
     name: SAST
-    uses: ./github/sast.yml
+    uses: ./.github/workflows/sast.yml
