@@ -11,6 +11,7 @@ fi
 ROOT_TOKEN="$1"
 UNSEAL_KEY="${2:-}"
 NAMESPACE="cinegest-site"
+ROLE_NAME="site-cinema-app"
 SA_NAME="vault-auth"
 
 # Configurer KUBECONFIG pour accéder au cluster K3s
@@ -101,8 +102,8 @@ vault_exec vault write auth/kubernetes/config \
   kubernetes_ca_cert=@/tmp/ca.crt
 
 # Créer le role
-echo "Création du role ${NAMESPACE}-app..."
-vault_exec vault write auth/kubernetes/role/${NAMESPACE}-app \
+echo "Création du role ${ROLE_NAME}..."
+vault_exec vault write auth/kubernetes/role/${ROLE_NAME} \
   bound_service_account_names=${SA_NAME} \
   bound_service_account_namespaces=${NAMESPACE} \
   policies=${NAMESPACE}-app \
