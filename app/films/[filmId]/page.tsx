@@ -35,39 +35,28 @@ export async function generateMetadata({ params }: MovieDetailPageProps): Promis
 }
 
 export default async function MovieDetailPage({ params }: MovieDetailPageProps) {
+    let content: { movie: Awaited<ReturnType<typeof getMovieWithSessions>>, cinemas: Awaited<ReturnType<typeof getCinemas>>, prices: Awaited<ReturnType<typeof getPrices>>['generalPrices'] } | null = null;
 
     try {
         const { filmId } = await params;
-        
+
         // Filtrer les fichiers de développement (source maps, etc.)
         if (filmId.includes('.js') || filmId.includes('.map') || filmId.includes('.css')) {
             throw new Error('Invalid film ID');
         }
-        
-        const selectedCinemaId = await getSelectedCinemaId();
-        let cinemaIds: string[];
 
-        if (selectedCinemaId !== undefined) {
-            cinemaIds = [selectedCinemaId.toString()];
-        } else {
-            cinemaIds = [];
-        }
-        
+        const selectedCinemaId = await getSelectedCinemaId();
+        const cinemaIds = selectedCinemaId !== undefined ? [selectedCinemaId.toString()] : [];
+
         const movie = await getMovieWithSessions(MovieRepositoryImpl, filmId, cinemaIds);
         const cinemas = await getCinemas(CinemaRepositoryImpl);
         const pricesData = await getPrices(PriceRepositoryImpl);
-
-        return (
-            <div className="min-h-screen">
-                <MovieDetailTemplate 
-                    movie={movie} 
-                    cinemas={cinemas} 
-                    prices={pricesData.generalPrices}
-                />
-            </div>
-        );
+        content = { movie, cinemas, prices: pricesData.generalPrices };
+    } catch (_) {
+        // content reste null
     }
-    catch (_) {
+
+    if (!content) {
         return (
             <div className="min-h-screen">
                 <Header />
@@ -78,4 +67,14 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
             </div>
         );
     }
+
+    return (
+        <div className="min-h-screen">
+            <MovieDetailTemplate
+                movie={content.movie}
+                cinemas={content.cinemas}
+                prices={content.prices}
+            />
+        </div>
+    );
 }
