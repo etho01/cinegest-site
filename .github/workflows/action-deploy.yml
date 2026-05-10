@@ -1,4 +1,4 @@
-name: Deploy maison-epouvante-front to K3s
+name: Deploy site-cinema to K3s
 
 on:
   push:
@@ -7,9 +7,9 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: etho01/maison-epouvante-front
-  NAMESPACE: maison-epouvante-front
-  DEPLOYMENT_NAME: maison-epouvante-front
+  IMAGE_NAME: ${{ github.repository }}
+  NAMESPACE: cinegest-site
+  DEPLOYMENT_NAME: site-cinema
   CONTAINER_NAME: app
 
 jobs:
@@ -84,9 +84,12 @@ jobs:
           severity: 'CRITICAL,HIGH,MEDIUM,LOW'
           exit-code: '0'
           ignore-unfixed: false
+        env:
+          TRIVY_USERNAME: ${{ github.actor }}
+          TRIVY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
@@ -100,6 +103,9 @@ jobs:
           output: 'trivy-image-results.json'
           severity: 'CRITICAL,HIGH,MEDIUM,LOW'
           exit-code: '0'
+        env:
+          TRIVY_USERNAME: ${{ github.actor }}
+          TRIVY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check for critical vulnerabilities
         run: |
@@ -249,21 +255,21 @@ jobs:
           
           # Attendre que l'ExternalSecret soit prêt (max 2 minutes)
           for i in {1..60}; do
-            STATUS=$(kubectl -n ${NAMESPACE} get externalsecret maison-epouvante-front-vault -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' 2>/dev/null || echo "")
+            STATUS=$(kubectl -n ${NAMESPACE} get externalsecret site-cinema-vault -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' 2>/dev/null || echo "")
             
             if [ "$STATUS" = "True" ]; then
               echo "✅ Secrets synchronized from Vault"
-              kubectl -n ${NAMESPACE} get secret maison-epouvante-front-secret
+              kubectl -n ${NAMESPACE} get secret site-cinema-secret
               break
             fi
             
             if [ $i -eq 60 ]; then
               echo "⚠️ Timeout waiting for Vault secrets synchronization"
               echo "Checking ExternalSecret status:"
-              kubectl -n ${NAMESPACE} describe externalsecret maison-epouvante-front-vault || true
+              kubectl -n ${NAMESPACE} describe externalsecret site-cinema-vault || true
               
               # Vérifier si le secret existe quand même (manuel)
-              if kubectl -n ${NAMESPACE} get secret maison-epouvante-front-secret &>/dev/null; then
+              if kubectl -n ${NAMESPACE} get secret site-cinema-secret &>/dev/null; then
                 echo "⚠️ Using existing manual secret (Vault not configured)"
               else
                 echo "❌ No secret available - deployment will fail"
@@ -308,7 +314,7 @@ jobs:
           if ! kubectl -n ${NAMESPACE} rollout status deployment/${DEPLOYMENT_NAME} --timeout=300s; then
             echo "Deployment failed!"
             kubectl -n ${NAMESPACE} describe deployment ${DEPLOYMENT_NAME}
-            kubectl -n ${NAMESPACE} logs -l app=maison-epouvante-front --tail=50
+            kubectl -n ${NAMESPACE} logs -l app=site-cinema --tail=50
             exit 1
           fi
 
