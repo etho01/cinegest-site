@@ -45,9 +45,7 @@ jobs:
           args: >
             -Dsonar.projectKey=cinegest-site-cinema
             -Dsonar.sources=src,app
-            -Dsonar.tests=__tests__
             -Dsonar.exclusions=**/*.test.ts,**/*.test.tsx,**/node_modules/**,**/.next/**
-            -Dsonar.test.inclusions=**/*.test.ts,**/*.test.tsx
             -Dsonar.verbose=false
       
       - name: SonarQube Quality Gate check
