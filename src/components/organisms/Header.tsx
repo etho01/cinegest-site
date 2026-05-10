@@ -9,10 +9,9 @@ import { User } from "@/src/domain/User";
 
 interface HeaderProps {
     page?: string;
-    pageTitle?: string;
 }
 
-export const Header = ({ pageTitle, page }: HeaderProps) => {
+export const Header = ({ page }: HeaderProps) => {
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [user, setUser] = useState<User | null>(null);
@@ -26,7 +25,7 @@ export const Header = ({ pageTitle, page }: HeaderProps) => {
         try {
             const userData = await getMeController();
             setUser(userData);
-        } catch (error) {
+        } catch {
             setUser(null);
         } finally {
             setIsLoading(false);

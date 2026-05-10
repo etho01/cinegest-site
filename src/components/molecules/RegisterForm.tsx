@@ -10,7 +10,7 @@ interface RegisterFormProps {
     onSwitchToLogin: () => void;
 }
 
-export default function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
+export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");

@@ -25,7 +25,7 @@ interface BookingModalProps {
     movieTitle?: string;
 }
 
-export function BookingModal({ isOpen, onClose, session, prices, sessionOptions = [], movieId, movieTitle }: BookingModalProps) {
+export function BookingModal({ isOpen, onClose, session, prices, sessionOptions = [] }: BookingModalProps) {
     const [tickets, setTickets] = useState<TicketSelection[]>([]);
     const [supplements, setSupplements] = useState<SupplementSelection[]>([]);
     const [total, setTotal] = useState(0);
@@ -45,7 +45,7 @@ export function BookingModal({ isOpen, onClose, session, prices, sessionOptions 
         setTotal(newTotal);
     };
 
-    const { executeAsync, hasErrored, result, input } = useAction(createPaymentIntent)
+    const { executeAsync } = useAction(createPaymentIntent)
 
     const handleConfirm = async () => {
         if (tickets.length === 0) {

@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Header } from "@/src/components/organisms/Header";
 import UpdateProfileForm from "@/src/components/molecules/UpdateProfileForm";
 import UpdatePasswordForm from "@/src/components/molecules/UpdatePasswordForm";
@@ -12,20 +12,20 @@ export default function ProfileTemplate() {
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
-    useEffect(() => {
-        checkAuth();
-    }, []);
-
-    const checkAuth = async () => {
+    const checkAuth = useCallback(async () => {
         try {
             const userData = await getMeController();
             setUser(userData);
-        } catch (_) {
+        } catch {
             router.push("/");
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [router]);
+
+    useEffect(() => {
+        checkAuth();
+    }, [checkAuth]);
 
     const handleUpdateSuccess = async () => {
         await checkAuth();

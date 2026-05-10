@@ -12,6 +12,7 @@ export function MovieCard({ movie }: MovieCardProps) {
         <Link href={`/films/${movie.id}`} className="block">
             <div className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform duration-300 hover:scale-105">
                 <div className="relative aspect-2/3 w-full bg-gray-200 overflow-hidden">
+                    {movie.posterUrl && (
                     <Image
                         src={movie.posterUrl}
                         alt={movie.title}
@@ -19,6 +20,7 @@ export function MovieCard({ movie }: MovieCardProps) {
                         className="object-cover"
                         sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                     />
+                    )}
                     
                     {/* Badge */}
                     {movie.badge && (

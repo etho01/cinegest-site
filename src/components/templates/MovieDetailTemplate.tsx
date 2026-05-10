@@ -30,13 +30,12 @@ export function MovieDetailTemplate({ movie, cinemas, prices }: MovieDetailTempl
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
-        checkAuthentication();
+        let mounted = true;
+        getMeController().then(user => {
+            if (mounted) setIsAuthenticated(!!user);
+        });
+        return () => { mounted = false; };
     }, []);
-
-    const checkAuthentication = async () => {
-        const user = await getMeController();
-        setIsAuthenticated(!!user);
-    };
 
     const handleSessionClick = async (session: MovieSession) => {
         // Vérifier si l'utilisateur est connecté

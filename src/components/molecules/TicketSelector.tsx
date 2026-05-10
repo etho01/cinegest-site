@@ -25,9 +25,8 @@ interface TicketSelectorProps {
     onSelectionChange?: (tickets: TicketSelection[], supplements: SupplementSelection[], total: number) => void;
 }
 
-export function TicketSelector({ prices, sessionOptions = [], session, onSelectionChange }: TicketSelectorProps) {
+export function TicketSelector({ prices, sessionOptions = [], onSelectionChange }: TicketSelectorProps) {
     const [ticketQuantities, setTicketQuantities] = useState<Record<number, number>>({});
-    const [supplementQuantities, setSupplementQuantities] = useState<Record<number, number>>({});
 
     const totalTickets = Object.values(ticketQuantities).reduce((sum, qty) => sum + qty, 0);
 
@@ -67,7 +66,7 @@ export function TicketSelector({ prices, sessionOptions = [], session, onSelecti
 
             onSelectionChange(tickets, supplements, total);
         }
-    }, [ticketQuantities, total, sessionOptionsTotal]);
+    }, [ticketQuantities, total, sessionOptionsTotal, onSelectionChange, prices]);
 
     const handleTicketQuantityChange = (priceId: number, change: number) => {
         setTicketQuantities(prev => {

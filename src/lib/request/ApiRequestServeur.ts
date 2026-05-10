@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { withSearchParams } from "../url";
+import { RequestHeaders, RequestParams } from "./types";
 
 export class ApiRequestServeur {
     static async getHeader(header: Record<string, string>): Promise<Record<string, string>> {
@@ -18,7 +19,7 @@ export class ApiRequestServeur {
         return headersReq
     }
 
-    static async GET(url: string, params: any, header: Record<string, string> = {}): Promise<Response> {
+    static async GET(url: string, params: RequestParams = {}, header: RequestHeaders = {}): Promise<Response> {
         url = withSearchParams(url, params)
         const headers = await ApiRequestServeur.getHeader(header);
         return fetch(url, {
@@ -28,7 +29,7 @@ export class ApiRequestServeur {
         })
     }
 
-    static async POST(url: string, params: any, header: Record<string, string> = {}): Promise<Response> {
+    static async POST(url: string, params: unknown = {}, header: RequestHeaders = {}): Promise<Response> {
         const headers = await ApiRequestServeur.getHeader(header);
         return fetch(url, {
             method: "POST",
@@ -38,7 +39,7 @@ export class ApiRequestServeur {
         })
     }
 
-    static async PUT(url: string, params: any, header: Record<string, string> = {}): Promise<Response> {
+    static async PUT(url: string, params: unknown = {}, header: RequestHeaders = {}): Promise<Response> {
         const headers = await ApiRequestServeur.getHeader(header);
         return fetch(url, {
             method: "PUT",
@@ -49,7 +50,7 @@ export class ApiRequestServeur {
         })
     }
 
-    static async DELETE(url: string, params: any, header: Record<string, string> = {}): Promise<Response> {
+    static async DELETE(url: string, params: unknown = {}, header: RequestHeaders = {}): Promise<Response> {
         const headers = await ApiRequestServeur.getHeader(header);
         return fetch(url, {
             method: "DELETE",

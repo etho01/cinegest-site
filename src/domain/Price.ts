@@ -14,6 +14,7 @@ export interface PriceOption {
 }
 
 export interface PricesByCinema {
+    id : number;
     cinemaId: number;
     cinemaName: string;
     options: PriceOption[]; // Options spécifiques au cinéma

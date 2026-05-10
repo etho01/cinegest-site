@@ -41,7 +41,7 @@ export default async function PriceTemplate() {
                             
                             <div className="grid grid-cols-1 gap-8">
                                 {pricesData.cinemaSpecificPrices.map(cinemaPrices => (
-                                    <CinemaPriceList key={cinemaPrices.cinemaId} cinemaPrices={cinemaPrices} />
+                                    <CinemaPriceList key={cinemaPrices.id} cinemaPrices={cinemaPrices} />
                                 ))}
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface CinemaContextType {
     selectedCinemaId: number | undefined;
@@ -36,15 +36,11 @@ function deleteCookie(name: string) {
 }
 
 export function CinemaProvider({ children }: { children: ReactNode }) {
-    const [selectedCinemaId, setSelectedCinemaIdState] = useState<number | undefined>(undefined);
-
-    // Charger le cinéma sélectionné depuis le cookie au montage
-    useEffect(() => {
+    const [selectedCinemaId, setSelectedCinemaIdState] = useState<number | undefined>(() => {
+        if (typeof window === 'undefined') return undefined;
         const savedCinemaId = getCookie(CINEMA_COOKIE_NAME);
-        if (savedCinemaId) {
-            setSelectedCinemaIdState(parseInt(savedCinemaId, 10));
-        }
-    }, []);
+        return savedCinemaId ? parseInt(savedCinemaId, 10) : undefined;
+    });
 
     const setSelectedCinemaId = (cinemaId: number | undefined) => {
         setSelectedCinemaIdState(cinemaId);

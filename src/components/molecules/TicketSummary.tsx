@@ -5,7 +5,7 @@ import { MovieSession } from '@/src/domain/Movie';
 
 interface TicketSummaryProps {
     tickets: TicketSelection[];
-    supplements: SupplementSelection[];
+    supplements?: SupplementSelection[];
     total: number;
     session?: MovieSession;
     onConfirm?: () => void;
@@ -13,7 +13,7 @@ interface TicketSummaryProps {
     isLoading?: boolean;
 }
 
-export function TicketSummary({ tickets, supplements, total, session, onConfirm, onCancel, isLoading = false }: TicketSummaryProps) {
+export function TicketSummary({ tickets, total, session, onConfirm, onCancel, isLoading = false }: TicketSummaryProps) {
     const formatPrice = (amount: number) => {
         return new Intl.NumberFormat('fr-FR', {
             style: 'currency',

@@ -41,7 +41,7 @@ export function StripePaymentForm({ onSuccess, onCancel, amount }: StripePayment
                 // Paiement réussi
                 onSuccess();
             }
-        } catch (err) {
+        } catch {
             setErrorMessage('Une erreur inattendue est survenue');
             setIsProcessing(false);
         }

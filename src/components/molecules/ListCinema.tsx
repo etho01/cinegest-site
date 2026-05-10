@@ -3,6 +3,7 @@ import { Cinema } from "@/src/domain/Cinema";
 import { Select } from "../atoms/Select";
 import { useCinema } from "@/src/context/CinemaContext";
 import { useRouter } from "next/navigation";
+import { CSSObjectWithLabel, OptionProps } from "react-select";
 
 interface ListCinemaProps {
     cinemas: Cinema[];
@@ -17,14 +18,19 @@ export const ListCinema = ({ cinemas }: ListCinemaProps) => {
         return null;
     }
 
-    const handleCinemaChange = (cinemaId : number | undefined) => {
+    const handleCinemaChange = (cinemaId : number | null) => {
+        if (cinemaId === null) {
+            setSelectedCinemaId(undefined);
+            router.refresh();
+            return;
+        }
         setSelectedCinemaId(cinemaId);
         // Rafraîchir la page pour recharger les données avec le nouveau cinéma
         router.refresh();
     };
 
     const selectStyles = {
-        control: (base: any) => ({
+        control: (base: CSSObjectWithLabel) => ({
             ...base,
             backgroundColor: "transparent",
             border: "none",
@@ -32,30 +38,30 @@ export const ListCinema = ({ cinemas }: ListCinemaProps) => {
             minHeight: 40,
             cursor: "pointer",
         }),
-        valueContainer: (base: any) => ({
+        valueContainer: (base: CSSObjectWithLabel) => ({
             ...base,
             padding: 0,
         }),
-        singleValue: (base: any) => ({
+        singleValue: (base: CSSObjectWithLabel) => ({
             ...base,
             color: "#fff",
             fontSize: "16px",
             fontWeight: 500,
         }),
-        menu: (base: any) => ({
+        menu: (base: CSSObjectWithLabel) => ({
             ...base,
             backgroundColor: "#1f1f1f",
             borderRadius: 12,
             overflow: "hidden",
         }),
-        option: (base: any, state: any) => ({
+        option: (base: CSSObjectWithLabel, state: OptionProps) => ({
             ...base,
             backgroundColor: state.isFocused ? "#2b2b2b" : "transparent",
             color: "#fff",
             cursor: "pointer",
         }),
         indicatorSeparator: () => ({ display: "none" }),
-        dropdownIndicator: (base: any) => ({
+        dropdownIndicator: (base: CSSObjectWithLabel) => ({
             ...base,
             paddingLeft: 10,
             paddingRight: 0,
@@ -64,7 +70,7 @@ export const ListCinema = ({ cinemas }: ListCinemaProps) => {
     };
 
     const selectedCinema = selectedCinemaId ? cinemas.find(c => c.id === selectedCinemaId) : null;
-    const selectedValue = selectedCinema ? selectedCinema.id : null;
+    const selectedValue = selectedCinema ? selectedCinema.id : undefined;
 
 
     return (
