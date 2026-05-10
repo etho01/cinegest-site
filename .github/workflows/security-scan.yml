@@ -308,7 +308,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Run Trivy vulnerability scanner (Filesystem)
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: 'fs'
           scan-ref: '.'
@@ -322,7 +322,7 @@ jobs:
           skip-files: '.env,.env.test,CI_CD.md,README.md,QUICKSTART.md'
       
       - name: Run Trivy vulnerability scanner (JSON for reporting)
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: 'fs'
           scan-ref: '.'
