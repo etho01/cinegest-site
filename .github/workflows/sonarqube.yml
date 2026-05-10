@@ -43,7 +43,7 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
-            -Dsonar.projectKey=maison-de-lepouvante-front
+            -Dsonar.projectKey=cinegest-site-cinema
             -Dsonar.sources=src,app
             -Dsonar.tests=__tests__
             -Dsonar.exclusions=**/*.test.ts,**/*.test.tsx,**/node_modules/**,**/.next/**
