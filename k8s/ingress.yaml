@@ -11,10 +11,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - maison-epouvante.nicolasbarbey.fr
+        - cinema.nicolasbarbey.fr
       secretName: site-cinema-tls
   rules:
-    - host: maison-epouvante.nicolasbarbey.fr
+    - host: cinema.nicolasbarbey.fr
       http:
         paths:
           - path: /

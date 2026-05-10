@@ -2,11 +2,14 @@
 set -euo pipefail
 
 if [ -z "${1:-}" ]; then
-  echo "Usage: $0 <ROOT_TOKEN>"
+  echo "Usage: $0 <ROOT_TOKEN> [UNSEAL_KEY]"
+  echo "  ROOT_TOKEN  : Token root Vault"
+  echo "  UNSEAL_KEY  : Clé de descellement (optionnel si Vault déjà descellé)"
   exit 1
 fi
 
 ROOT_TOKEN="$1"
+UNSEAL_KEY="${2:-}"
 NAMESPACE="cinegest-site"
 SA_NAME="vault-auth"
 
@@ -14,7 +17,7 @@ SA_NAME="vault-auth"
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 KUBECTL="sudo -E kubectl"
 
-echo "🔧 Configuration de Vault pour Maison de l'Épouvante..."
+echo "🔧 Configuration de Vault pour Cinegest Site Cinema..."
 
 # Tuer les anciens port-forwards
 pkill -f "port-forward.*vault" || true
@@ -28,9 +31,26 @@ sleep 3
 export VAULT_ADDR=http://127.0.0.1:8200
 export VAULT_TOKEN="$ROOT_TOKEN"
 
+# Desceller Vault si nécessaire
+SEALED=$($KUBECTL -n vault exec deploy/vault -- sh -c "env VAULT_ADDR=http://localhost:8200 vault status -format=json 2>/dev/null | jq -r '.sealed'" 2>/dev/null || echo "true")
+if [ "$SEALED" = "true" ]; then
+  if [ -z "$UNSEAL_KEY" ]; then
+    echo "❌ Vault est scellé. Fournissez une clé de descellement en 2ème argument."
+    echo "   Usage: $0 <ROOT_TOKEN> <UNSEAL_KEY>"
+    kill $PF_PID 2>/dev/null || true
+    exit 1
+  fi
+  echo "🔓 Descellement de Vault..."
+  $KUBECTL -n vault exec deploy/vault -- sh -c "env VAULT_ADDR=http://localhost:8200 vault operator unseal $UNSEAL_KEY"
+  sleep 2
+  echo "✅ Vault descellé"
+else
+  echo "✅ Vault déjà descellé"
+fi
+
 # Helper function to run vault commands in the pod
 vault_exec() {
-  $KUBECTL -n vault exec deploy/vault -- sh -c "export VAULT_ADDR=http://localhost:8200 VAULT_TOKEN=$ROOT_TOKEN && $*"
+  $KUBECTL -n vault exec deploy/vault -- sh -c "env VAULT_ADDR=http://localhost:8200 VAULT_TOKEN=$ROOT_TOKEN $*"
 }
 
 # Activer KV v2
@@ -45,7 +65,7 @@ POLICY_CONTENT="path \"secret/data/${NAMESPACE}/*\" {
 path \"secret/metadata/${NAMESPACE}/*\" {
   capabilities = [\"read\", \"list\"]
 }"
-echo "$POLICY_CONTENT" | $KUBECTL -n vault exec -i deploy/vault -- sh -c "export VAULT_ADDR=http://localhost:8200 VAULT_TOKEN=$ROOT_TOKEN && vault policy write ${NAMESPACE}-app -"
+echo "$POLICY_CONTENT" | $KUBECTL -n vault exec -i deploy/vault -- sh -c "env VAULT_ADDR=http://localhost:8200 VAULT_TOKEN=$ROOT_TOKEN vault policy write ${NAMESPACE}-app -"
 
 # Configurer auth Kubernetes
 echo "Configuration de l'auth Kubernetes..."
