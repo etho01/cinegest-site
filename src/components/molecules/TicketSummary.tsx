@@ -10,7 +10,7 @@ interface TicketSummaryProps {
     session?: MovieSession;
     onConfirm?: () => void;
     onCancel?: () => void;
-    isLoading?: boolean;
+    isLoading?: boolean; 
 }
 
 export function TicketSummary({ tickets, total, session, onConfirm, onCancel, isLoading = false }: TicketSummaryProps) {
