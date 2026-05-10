@@ -1,24 +1,26 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: cinegest-site
+  name: site-cinema
   namespace: cinegest-site
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-production
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.middlewares: cinegest-site-ratelimit@kubernetescrd,cinegest-site-security-headers@kubernetescrd
 spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - cinema.cinegest.nicolasbarbey.fr
-      secretName: cinema-cinegest-tls
+        - maison-epouvante.nicolasbarbey.fr
+      secretName: site-cinema-tls
   rules:
-    - host: cinema.cinegest.nicolasbarbey.fr
+    - host: maison-epouvante.nicolasbarbey.fr
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: cinegest-site
+                name: site-cinema
                 port:
-                  number: 80
+                  number: 3000
