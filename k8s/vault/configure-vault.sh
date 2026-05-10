@@ -32,7 +32,11 @@ export VAULT_ADDR=http://127.0.0.1:8200
 export VAULT_TOKEN="$ROOT_TOKEN"
 
 # Desceller Vault si nécessaire
-SEALED=$($KUBECTL -n vault exec deploy/vault -- sh -c "env VAULT_ADDR=http://localhost:8200 vault status -format=json 2>/dev/null | jq -r '.sealed'" 2>/dev/null || echo "true")
+if $KUBECTL -n vault exec deploy/vault -- sh -c "env VAULT_ADDR=http://localhost:8200 vault status" >/dev/null 2>&1; then
+  SEALED="false"
+else
+  SEALED="true"
+fi
 if [ "$SEALED" = "true" ]; then
   if [ -z "$UNSEAL_KEY" ]; then
     echo "❌ Vault est scellé. Fournissez une clé de descellement en 2ème argument."
